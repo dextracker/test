@@ -21,6 +21,7 @@ import { formatEther } from '@ethersproject/units';
 import { injected, network, walletconnect, ledger, trezor } from './connectors';
 import { useEagerConnect, useInactiveListener } from './hooks';
 import { Spinner } from './Spinner';
+import { Orders } from './Order';
 import { ethers } from 'ethers';
 
 const connectorsByName = {
@@ -231,7 +232,14 @@ function MyComponent() {
 
   return (
     <div style={{ padding: '1rem' }}>
-      <h1 style={{ margin: '0' }}>
+      <h1
+        style={{
+          margin: '0',
+          display: 'grid',
+          gridGap: '1rem',
+          gridTemplateColumns: '0.5fr 3fr 1fr',
+        }}
+      >
         {/* {active ? '🟢' : error ? '🔴' : '🟠'} */}
         {/* </h1> */}
         {/* wallet connector */}
@@ -264,6 +272,23 @@ function MyComponent() {
           }
           return (
             <>
+              <img
+                src="https://uploads.codesandbox.io/uploads/user/ec99cf90-9270-41c2-9b72-7cb10eee778e/WSE8-FlyWheelLogo2.png"
+                alt="logo"
+                style={{
+                  width: '5em',
+                  heigh: '5em',
+                }}
+              />
+              <div
+                style={{
+                  width: '',
+                  height: '5em',
+                  backgroundColor: 'red',
+                  float: 'center',
+                  margin: 'auto',
+                }}
+              />
               {!!(error && !active) && (
                 <>
                   <button
@@ -473,15 +498,8 @@ function MyComponent() {
         </span> */}
       </h1>
       {/* </h3> */}
-      <img src="../sources/flywheel.png" alt="" />
-      <div
-        style={{
-          width: '50%',
-          height: '7em',
-          backgroundImage: 'red',
-        }}
-      />
-      <hr style={{ margin: '2rem' }} />
+
+      <hr style={{ margin: '0.5rem' }} />
       {/* wallet connector */}
       {/* <div
         style={{
@@ -555,50 +573,47 @@ function MyComponent() {
           display: 'grid',
           gridGap: '1rem',
           gridTemplateColumns: 'fit-content',
-          maxWidth: '20rem',
+          maxWidth: '100%',
+          maxHeight: '100%',
+          height: '100%',
           margin: 'auto',
+          borderWidth: '20px',
+          borderStyle: 'inset',
+          borderRadius: '34px',
+          borderImage:
+            'radial-gradient(circle, rgba(2,0,36,0) 0%, rgba(0,0,0,0) 68%, rgba(0,115,129,0.31416316526610644) 85%, rgba(255,188,0,0.45) 94%, rgba(210,137,35,0.6) 97%, rgba(210,137,35,0.3) 100%) 1',
         }}
       >
         {/* code here */}
         {!!(library && account) && (
-          <button
-            style={{
-              height: '3rem',
-              borderRadius: '1rem',
-              cursor: 'pointer',
-            }}
-            onClick={() => {
-              library
-                .getSigner(account)
-                .signMessage('👋')
-                .then((signature) => {
-                  window.alert(`Success!\n\n${signature}`);
-                })
-                .catch((error) => {
-                  window.alert(
-                    'Failure!' +
-                      (error && error.message ? `\n\n${error.message}` : '')
-                  );
-                });
-            }}
-          >
-            Sign Message
-          </button>
-        )}
-
-        {!!(connector === network && chainId) && (
-          <button
-            style={{
-              height: '3rem',
-              borderRadius: '1rem',
-              cursor: 'pointer',
-            }}
-            onClick={() => {
-              connector.changeChainId(chainId === 1 ? 4 : 1);
-            }}
-          >
-            Switch Networks
-          </button>
+          <>
+            {/* <span>
+              <Orders library={library} account={account}></Orders>
+            </span> */}
+            <button
+              style={{
+                height: '3rem',
+                borderRadius: '1rem',
+                cursor: 'pointer',
+              }}
+              onClick={() => {
+                library
+                  .getSigner(account)
+                  .signMessage('👋')
+                  .then((signature) => {
+                    window.alert(`Success!\n\n${signature}`);
+                  })
+                  .catch((error) => {
+                    window.alert(
+                      'Failure!' +
+                        (error && error.message ? `\n\n${error.message}` : '')
+                    );
+                  });
+              }}
+            >
+              Sign Message
+            </button>
+          </>
         )}
       </div>
     </div>
