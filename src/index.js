@@ -291,66 +291,49 @@ function MyComponent() {
               />
               {!!(error && !active) && (
                 <>
-                  <button
-                    class={'btn-ftm'}
-                    style={{
-                      height: '5rem',
-                      width: 'max-content',
-                      borderRadius: '1rem',
-                      cursor: disabled ? 'unset' : 'pointer',
-                      position: 'relative',
-                    }}
-                    key={'switchProviderToFtm'}
-                    onClick={async () => {
-                      console.log(await currentConnector.getChainId());
-                      await switchProviderToFtm();
-                      setActivatingConnector(currentConnector);
-                      activate(connectorsByName[name]);
-                    }}
-                  >
-                    Switch to Ftm
-                  </button>
-                  <button
-                    className={'btn-avax'}
-                    style={{
-                      height: '5rem',
-                      width: 'max-content',
-                      borderRadius: '1rem',
-                      cursor: disabled ? 'unset' : 'pointer',
-                      position: 'relative',
-                    }}
-                    key={'switchProviderToAvax'}
-                    onClick={async () => {
-                      console.log('here');
-                      await switchProviderToAvax();
-                    }}
-                  >
-                    Switch to Avax
-                  </button>
+                  <div style={{ float: 'right' }}>
+                    <button
+                      class={'btn-ftm'}
+                      style={{
+                        height: '5rem',
+                        width: 'max-content',
+                        borderRadius: '1rem',
+                        cursor: disabled ? 'unset' : 'pointer',
+                        position: 'relative',
+                      }}
+                      key={'switchProviderToFtm'}
+                      onClick={async () => {
+                        console.log(await currentConnector.getChainId());
+                        await switchProviderToFtm();
+                        setActivatingConnector(currentConnector);
+                        activate(connectorsByName[name]);
+                      }}
+                    >
+                      Switch to Ftm
+                    </button>
+                    <button
+                      className={'btn-avax'}
+                      style={{
+                        height: '5rem',
+                        width: 'max-content',
+                        borderRadius: '1rem',
+                        cursor: disabled ? 'unset' : 'pointer',
+                        position: 'relative',
+                        float: 'right',
+                      }}
+                      key={'switchProviderToAvax'}
+                      onClick={async () => {
+                        console.log('here');
+                        await switchProviderToAvax();
+                      }}
+                    >
+                      Switch to Avax
+                    </button>
+                  </div>
                 </>
               )}
               {(chainId === 250 || 43314) && !connected && (
-                <button
-                  className={btnStyle}
-                  style={{
-                    height: '5rem',
-                    width: 'max-content',
-                    borderRadius: '1rem',
-                    cursor: disabled ? 'unset' : 'pointer',
-                    position: 'relative',
-                  }}
-                  disabled={disabled}
-                  key={'connect wallet button'}
-                  onClick={() => {
-                    setActivatingConnector(currentConnector);
-                    activate(connectorsByName[name]);
-                  }}
-                >
-                  {!connected && 'Please Connect Your Wallet'}
-                </button>
-              )}
-              {active && connected && (
-                <>
+                <div style={{ float: 'right' }}>
                   <button
                     className={btnStyle}
                     style={{
@@ -367,74 +350,98 @@ function MyComponent() {
                       activate(connectorsByName[name]);
                     }}
                   >
-                    <div
+                    {!connected && 'Please Connect Your Wallet'}
+                  </button>
+                </div>
+              )}
+              {active && connected && (
+                <>
+                  <div style={{ float: 'right' }}>
+                    <button
+                      className={btnStyle}
                       style={{
+                        height: '5rem',
+                        width: 'max-content',
+                        borderRadius: '1rem',
+                        cursor: disabled ? 'unset' : 'pointer',
                         position: 'relative',
-                        top: '0',
-                        left: '0',
-                        height: '100%',
-                        display: 'flex',
-                        alignItems: 'center',
-                        color: 'black',
-                        margin: '0 0 0 1rem',
                       }}
+                      disabled={disabled}
+                      key={'connect wallet button'}
                       onClick={() => {
-                        deactivate();
+                        setActivatingConnector(currentConnector);
+                        activate(connectorsByName[name]);
                       }}
                     >
-                      {activating && (
-                        <Spinner
-                          color={'black'}
-                          style={{ height: '25%', marginLeft: '-1rem' }}
-                        />
-                      )}
-                      {/* wallet connector */}
-                      {connected && account && (
-                        <>
-                          <span role="img" aria-label="chain">
-                            {chainId === 43114 && (
-                              <>
-                                <span padding="1em">
-                                  <img
-                                    src="https://cdn.discordapp.com/attachments/944459435475079189/944459543570685983/avalanche-avax-logo.png"
-                                    alt="test"
-                                    width="30em"
-                                    alignItems="center"
-                                  />
-                                </span>
-                              </>
-                            )}
-                            {chainId === 250 && (
-                              <img
-                                src="https://cdn.discordapp.com/attachments/944459435475079189/944459543788814336/ftm.png"
-                                alt="test"
-                                width="30em"
-                              />
-                            )}
-                          </span>
-                          <span>
-                            {account === undefined ? (
-                              '...'
-                            ) : account === null ? (
-                              'None'
-                            ) : (
-                              <EnsName address={account} />
-                            )}
-                            {console.log(ethers.getDefaultProvider())}
-                          </span>
-                          <span>
-                            {ethBalance === undefined
-                              ? '...'
-                              : ethBalance === null
-                              ? 'Error'
-                              : `Ξ${parseFloat(
-                                  formatEther(ethBalance)
-                                ).toPrecision(4)}`}
-                          </span>
-                        </>
-                      )}
-                    </div>
-                  </button>
+                      <div
+                        style={{
+                          position: 'relative',
+                          top: '0',
+                          left: '0',
+                          height: '100%',
+                          display: 'flex',
+                          alignItems: 'center',
+                          color: 'black',
+                          margin: '0 0 0 1rem',
+                        }}
+                        onClick={() => {
+                          deactivate();
+                        }}
+                      >
+                        {activating && (
+                          <Spinner
+                            color={'black'}
+                            style={{ height: '25%', marginLeft: '-1rem' }}
+                          />
+                        )}
+                        {/* wallet connector */}
+                        {connected && account && (
+                          <>
+                            <span role="img" aria-label="chain">
+                              {chainId === 43114 && (
+                                <>
+                                  <span padding="1em">
+                                    <img
+                                      src="https://cdn.discordapp.com/attachments/944459435475079189/944459543570685983/avalanche-avax-logo.png"
+                                      alt="test"
+                                      width="30em"
+                                      alignItems="center"
+                                    />
+                                  </span>
+                                </>
+                              )}
+                              {chainId === 250 && (
+                                <img
+                                  src="https://cdn.discordapp.com/attachments/944459435475079189/944459543788814336/ftm.png"
+                                  alt="test"
+                                  width="30em"
+                                />
+                              )}
+                            </span>
+                            <span>
+                              {account === undefined ? (
+                                '...'
+                              ) : account === null ? (
+                                'None'
+                              ) : (
+                                <EnsName address={account} />
+                              )}
+                              {console.log(ethers.getDefaultProvider())}
+                            </span>
+                            <span>
+                              {ethBalance === undefined
+                                ? '...'
+                                : ethBalance === null
+                                ? 'Error'
+                                : `Ξ${parseFloat(
+                                    formatEther(ethBalance)
+                                  ).toPrecision(4)}`}
+                            </span>
+                          </>
+                        )}
+                      </div>
+                    </button>
+                  </div>
                 </>
               )}
             </>
