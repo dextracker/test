@@ -231,11 +231,11 @@ function MyComponent() {
 
   return (
     <div style={{ padding: '1rem' }}>
-      <h1 style={{ margin: '0', textAlign: 'right' }}>
-        {active ? '🟢' : error ? '🔴' : '🟠'}
-      </h1>
-      {/* wallet connector */}
-      <h3
+      <h1 style={{ margin: '0' }}>
+        {/* {active ? '🟢' : error ? '🔴' : '🟠'} */}
+        {/* </h1> */}
+        {/* wallet connector */}
+        {/* <h3
         style={{
           display: 'grid',
           gridGap: '1rem',
@@ -243,8 +243,9 @@ function MyComponent() {
           maxWidth: '20rem',
           lineHeight: '2rem',
           margin: 'auto',
+          textAlign: 'right',
         }}
-      >
+      > */}
         {Object.keys(injectedByName).map((name) => {
           const currentConnector = connectorsByName[name];
           const activating = currentConnector === activatingConnector;
@@ -470,7 +471,16 @@ function MyComponent() {
             ? 'Error'
             : `Ξ${parseFloat(formatEther(ethBalance)).toPrecision(4)}`}
         </span> */}
-      </h3>
+      </h1>
+      {/* </h3> */}
+      <img src="../sources/flywheel.png" alt="" />
+      <div
+        style={{
+          width: '50%',
+          height: '7em',
+          backgroundImage: 'red',
+        }}
+      />
       <hr style={{ margin: '2rem' }} />
       {/* wallet connector */}
       {/* <div
