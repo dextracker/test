@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { useENSName } from 'use-ens-name';
+import { Provider } from 'react-redux';
 import {
   Web3ReactProvider,
   useWeb3React,
@@ -21,8 +22,9 @@ import { formatEther } from '@ethersproject/units';
 import { injected, network, walletconnect, ledger, trezor } from './connectors';
 import { useEagerConnect, useInactiveListener } from './hooks';
 import { Spinner } from './Spinner';
-import { Orders } from './Order';
+import { Orders, CreateOrder } from './Order';
 import { ethers } from 'ethers';
+import { SCAC } from './contracts/contractWrappers/SCAC';
 
 const connectorsByName = {
   Injected: injected,
@@ -116,7 +118,7 @@ function getLibrary(provider) {
 function App() {
   return (
     <Web3ReactProvider getLibrary={getLibrary}>
-      <MyComponent key={'app'} />
+      <MyComponent key={'mainApp'} />
     </Web3ReactProvider>
   );
 }
@@ -293,7 +295,7 @@ function MyComponent() {
                 <>
                   <div style={{ float: 'right' }}>
                     <button
-                      class={'btn-ftm'}
+                      className={'btn-ftm'}
                       style={{
                         height: '5rem',
                         width: 'max-content',
@@ -325,6 +327,8 @@ function MyComponent() {
                       onClick={async () => {
                         console.log('here');
                         await switchProviderToAvax();
+                        setActivatingConnector(currentConnector);
+                        activate(connectorsByName[name]);
                       }}
                     >
                       Switch to Avax
@@ -405,7 +409,6 @@ function MyComponent() {
                                       src="https://cdn.discordapp.com/attachments/944459435475079189/944459543570685983/avalanche-avax-logo.png"
                                       alt="test"
                                       width="30em"
-                                      alignItems="center"
                                     />
                                   </span>
                                 </>
@@ -577,27 +580,37 @@ function MyComponent() {
 
       <div
         style={{
-          display: 'grid',
-          gridGap: '1rem',
-          gridTemplateColumns: 'fit-content',
+          display: 'flex',
           maxWidth: '100%',
           maxHeight: '100%',
-          height: '100%',
+          height: 'auto',
+          width: '80%',
           margin: 'auto',
+          justifyContent: 'center',
           borderWidth: '20px',
-          borderStyle: 'inset',
+          //borderStyle: 'inset',
           borderRadius: '34px',
-          borderImage:
-            'radial-gradient(circle, rgba(2,0,36,0) 0%, rgba(0,0,0,0) 68%, rgba(0,115,129,0.31416316526610644) 85%, rgba(255,188,0,0.45) 94%, rgba(210,137,35,0.6) 97%, rgba(210,137,35,0.3) 100%) 1',
+          background: 'linear-gradient(90deg, #e3ffe785 0%, #d9e7ff85 100%)',
+
+          // borderImage:
+          //   'radial-gradient(circle, rgba(2,0,36,0) 0%, rgba(0,0,0,0) 68%, rgba(0,115,129,0.31416316526610644) 85%, rgba(255,188,0,0.45) 94%, rgba(210,137,35,0.6) 97%, rgba(210,137,35,0.3) 100%) 1',
         }}
       >
         {/* code here */}
-        {!!(library && account) && (
+        {library && account && (
           <>
-            {/* <span>
-              <Orders library={library} account={account}></Orders>
-            </span> */}
-            <button
+            <span
+              style={{
+                width: '100%',
+                height: 'fit-content',
+                display: 'block',
+
+                padding: '2em 2em 2em 2em',
+              }}
+            >
+              <CreateOrder library={getLibrary} account={account}></CreateOrder>
+            </span>
+            {/* <button
               style={{
                 height: '3rem',
                 borderRadius: '1rem',
@@ -619,7 +632,7 @@ function MyComponent() {
               }}
             >
               Sign Message
-            </button>
+            </button> */}
           </>
         )}
       </div>
