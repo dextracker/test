@@ -24,7 +24,6 @@ import { useEagerConnect, useInactiveListener } from './hooks';
 import { Spinner } from './Spinner';
 import { Orders, CreateOrder } from './Order';
 import { ethers } from 'ethers';
-import { SCAC } from './contracts/contractWrappers/SCAC';
 
 const connectorsByName = {
   Injected: injected,
