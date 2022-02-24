@@ -6,7 +6,7 @@ import {
   useWeb3React,
   UnsupportedChainIdError,
 } from '@web3-react/core';
-import { SCAC } from './contracts/contractWrappers/SCAC';
+
 import { Dropdown } from 'reactjs-dropdown-component';
 import { useEagerConnect, useInactiveListener } from './hooks';
 const joeJson = require('./utils/joeTokens.json');
