@@ -18,7 +18,14 @@ async function getBalance(address, abi, signer) {
   return bal;
 }
 
-function TokenList(tokens, currentToken) {
+// value={token0}
+// tokens={joeTokens}
+// setToken={handleToken0}
+// setMinimized={setToggleInput0}
+// isMinimized={toggleInput0}
+
+const TokenList = (params) => {
+  //(tokens, { setToken, minimize }, currentToken, isMinimized)
   const context = useWeb3React();
   const [_signer, _setSigner] = useState();
   const {
@@ -32,11 +39,18 @@ function TokenList(tokens, currentToken) {
     error,
   } = context;
   const triedEager = useEagerConnect();
-  console.log('TRIED', triedEager);
+  console.log('Connecting To Provider', triedEager);
+
   async function temp() {
     let lib = await library.getSigner(account);
     return lib;
   }
+  console.log(temp());
+
+  function handleChange(e) {
+    //setToken(e.target.key);
+  }
+
   // useEffect(() => {
   //   if (signer) {
   //     let bal = getContract(
@@ -48,14 +62,27 @@ function TokenList(tokens, currentToken) {
   //   }
   // }, [library, signer]);
   console.log('CURRENT');
-  return tokens.tokens.map((t) => (
+
+  return params.tokens.map((t) => (
     <div
       key={t.address}
-      onClick={() => {
-        console.log(currentToken);
-        // currentToken(t.address);
+      onClick={(e) => {
+        params.setToken(e.target.alt);
+        params.setMinimized(false);
+      }}
+      style={{
+        radius: '2px',
       }}
     >
+      <div
+        style={{
+          display: 'inline-block',
+          float: 'right',
+          margin: '0.5em 0.5em 0em 0em',
+        }}
+      >
+        {t.symbol}
+      </div>
       <img
         style={{
           objectFit: 'cover',
@@ -67,12 +94,11 @@ function TokenList(tokens, currentToken) {
         src={t.logoURI}
         alt={t.address}
       />
-      <div style={{ display: 'inline-block', float: 'right' }}>{t.symbol}</div>
 
       {/* {getBalance(t.address, IERC20TokenV06.abi, signer)} */}
     </div>
   ));
-}
+};
 
 export function CreateOrder(library, account) {
   const [signer, setSigner] = useState(null);
@@ -92,13 +118,45 @@ export function CreateOrder(library, account) {
   const token0Ref = React.useRef(null);
   const token1Ref = React.useRef(null);
   const lpPairRef = React.useRef(null);
+  const [token0Index, settoken0Index] = useState('');
+  const [token1Index, settoken1Index] = useState('');
+  const [tokenIMG0, settokenIMG0] = useState('');
+  const [tokenIMG1, settokenIMG1] = useState('');
 
-  const handleToken0 = (e) => {
-    setToken0(e);
-  };
-  const handleToken1 = (e) => {
-    setToken1(e);
-  };
+  function findInJson(address) {
+    let tokens = [];
+    joeTokens.forEach((element, index) => {
+      if (element.address === address) {
+        console.log('found');
+        tokens.push(joeTokens[index]);
+        console.log(tokens);
+      }
+    });
+
+    return tokens;
+  }
+
+  function handleToken0(value) {
+    setToken0(value);
+  }
+  function handleToggleInput0(value) {
+    console.log('handling toggle 1', value);
+    setToggleInput0(value);
+  }
+  function handleToggleInput1(value) {
+    console.log('handling toggle 1', value);
+    setToggleInput1(value);
+  }
+  function handleToken1(value) {
+    setToken1(value);
+  }
+
+  useEffect(() => {
+    settokenIMG0(findInJson(token0));
+  }, [token0]);
+  useEffect(() => {
+    settokenIMG1(findInJson(token1));
+  }, [token1]);
 
   return (
     <>
@@ -117,7 +175,6 @@ export function CreateOrder(library, account) {
         <div
           style={{
             background: 'none',
-            outline: '5px dotted green',
             display: 'inline-flex',
             justifyContent: 'space-evenly',
             width: '80%',
@@ -139,12 +196,18 @@ export function CreateOrder(library, account) {
               ref={token0Ref}
               onChange={(e) => setToken0(e.target.value)}
               onClick={(e) =>
-                setToggleInput0(toggleInput0 === false ? true : false)
+                handleToggleInput0(toggleInput0 === false ? true : false)
               }
             />
             {toggleInput0 === true && (
               <div className="TokenDropdown">
-                <TokenList tokens={joeTokens} currentToken={handleToken0} />
+                <TokenList
+                  value={token0}
+                  tokens={joeTokens}
+                  setToken={handleToken0}
+                  setMinimized={setToggleInput0}
+                  isMinimized={toggleInput0}
+                />
               </div>
             )}
           </div>
@@ -165,14 +228,48 @@ export function CreateOrder(library, account) {
                 ref={token1Ref}
                 onChange={(e) => setToken0(e.target.value)}
                 onClick={(e) =>
-                  setToggleInput1(toggleInput1 === false ? true : false)
+                  handleToggleInput1(toggleInput1 === false ? true : false)
                 }
               />
               {toggleInput1 === true && (
                 <div className="TokenDropdown">
-                  <TokenList tokens={joeTokens} currentToken={handleToken1} />
+                  <TokenList
+                    value={token1}
+                    tokens={joeTokens}
+                    setToken={setToken1}
+                    setMinimized={setToggleInput1}
+                    isMinimized={toggleInput1}
+                  />
                 </div>
               )}
+
+              <>
+                {console.log('URL', tokenIMG0.imageURI)}
+                <div>
+                  <img
+                    style={{
+                      objectFit: 'cover',
+                      width: '2em',
+                      height: '2em',
+                      borderRadius: '50%',
+                      margin: '0.3em',
+                    }}
+                    src={tokenIMG0.imageURI}
+                  />
+                </div>
+                <div>
+                  <img
+                    style={{
+                      objectFit: 'cover',
+                      width: '2em',
+                      height: '2em',
+                      borderRadius: '50%',
+                      margin: '0.3em',
+                    }}
+                    src={tokenIMG1.imageURI}
+                  />
+                </div>
+              </>
             </div>
           </div>
         </div>

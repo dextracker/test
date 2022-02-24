@@ -608,7 +608,7 @@ function MyComponent() {
                 padding: '2em 2em 2em 2em',
               }}
             >
-              <CreateOrder library={getLibrary} account={account}></CreateOrder>
+              <CreateOrder library={getLibrary} account={account} />
             </span>
             {/* <button
               style={{
