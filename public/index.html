@@ -13,13 +13,21 @@
     -->
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/victormono@latest/dist/index.min.css"
+    />
     <style>
+      html * {
+        font-family: Victor-mono !important;
+        color: #272727;
+      }
       html {
         height: 100%;
       }
       /* pink->blue gradient */
       body {
-        font-family: sans-serif;
+        font-family: Victor-mono;
         background-image: linear-gradient(to top, #5ee7df 0%, #b490ca 100%);
         height: 100%;
         margin: 0;
@@ -29,22 +37,23 @@
       .btn-avax {
         background-image: linear-gradient(
           to right,
-          #556270 0%,
-          #ff6b6b 51%,
-          #556270 100%
+          #55627085 0%,
+          #ff6b6b81 51%,
+          #55627085 100%
         );
       }
       .btn-avax {
         margin: 10px;
-        padding: 15px 45px;
+        padding: 15px 15px;
         text-align: center;
         text-transform: uppercase;
         transition: 0.25s;
         background-size: 200% auto;
-        color: white;
+        color: rgb(167, 19, 19);
         box-shadow: 0 0 20px rgba(14, 12, 12, 0.705);
         border-radius: 10px;
         display: block;
+        float: right;
       }
 
       .btn-avax:hover {
@@ -56,22 +65,23 @@
       .btn-ftm {
         background-image: linear-gradient(
           to right,
-          #003973 0%,
-          #e5e5be 51%,
-          #003973 100%
+          #003a738a 0%,
+          #e5e5be7c 51%,
+          #003a7385 100%
         );
       }
       .btn-ftm {
         margin: 10px;
-        padding: 15px 45px;
+        padding: 15px 15px;
         text-align: center;
         text-transform: uppercase;
         transition: 0.25s;
         background-size: 200% auto;
-        color: white;
+        color: rgb(23, 33, 88);
         box-shadow: 0 0 20px rgba(14, 12, 12, 0.705);
         border-radius: 10px;
         display: block;
+        float: right;
       }
 
       .btn-ftm:hover {
@@ -106,6 +116,129 @@
         color: rgba(14, 12, 12, 0.705);
         text-decoration: none;
       }
+
+      .flex-container {
+        display: flex;
+        width: 100%;
+        justify-content: space-evenly;
+        align-items: stretch;
+
+        background-color: #ffffff00;
+        height: 100%;
+        padding: 15px;
+        gap: 5px;
+      }
+
+      .flex-container > div {
+        background: #ffffff49;
+
+        border: 3px solid #f0c78913;
+        border-radius: 5px;
+        padding: 8px;
+      }
+
+      .inputMain {
+        width: 100%;
+        padding: 5px;
+        font-size: 16px;
+        border-width: 4px;
+        border-color: #42b1b963;
+        background-color: #ffffff00;
+        color: #000000;
+        border-style: outset;
+        border-radius: 13px;
+        box-shadow: 19px -1px 26px rgba(255, 146, 0, 0.51);
+      }
+
+      .flyWheel {
+        background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%);
+      }
+      .select {
+        position: relative;
+        display: inline-block;
+        margin-bottom: 15px;
+        width: 5em;
+      }
+
+      .select select {
+        font-family: 'Arial';
+        display: inline-block;
+        min-width: 15em;
+        width: fit-content;
+        text-align: center;
+        cursor: pointer;
+        padding: 16px 10px;
+        outline: 0;
+        border: 2px outset #42b0fc;
+        border-radius: 13px;
+        background: #c4c7db;
+        color: #000000;
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+      }
+      .select select::-ms-expand {
+        display: none;
+      }
+      .select select:hover,
+      .select select:focus {
+        color: #000000;
+        background: #6f79ff70;
+      }
+      .select_arrow {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        pointer-events: none;
+        border-style: solid;
+        border-width: 8px 5px 0px 5px;
+        border-color: #e600ff52 transparent transparent transparent;
+      }
+      .select select:hover ~ .select_arrow,
+      .select select:focus ~ .select_arrow {
+        border-top-color: #000000;
+      }
+
+      /* ===== Scrollbar CSS ===== */
+      /* Firefox */
+      * {
+        scrollbar-width: thin;
+        scrollbar-color: #02e7f7 #ffffff00;
+      }
+
+      /* Chrome, Edge, and Safari */
+      *::-webkit-scrollbar {
+        border-top: 1px dashed #000;
+        border-bottom: 1px dashed #000;
+        max-height: 25%;
+        height: 25%;
+        width: 16px;
+      }
+
+      *::-webkit-scrollbar-track {
+        background: #ffffff00;
+        max-height: 50%;
+        height: 50%;
+      }
+
+      *::-webkit-scrollbar-thumb {
+        background-color: #026cf75e;
+        border-radius: 20px;
+        border: 3px solid #ff000000;
+      }
+
+      .TokenDropdown {
+        background-color: #29222218;
+        height: 15em;
+        width: 15em;
+        overflow-x: hidden;
+        overflow-y: scroll;
+        display: block;
+      }
+
+      /* .inputMain:focus {
+        outline: none;
+      } */
     </style>
     <!--
       Notice the use of %PUBLIC_URL% in the tags above.

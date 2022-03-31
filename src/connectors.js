@@ -18,7 +18,7 @@ export const injected = new InjectedConnector({
 
 export const network = new NetworkConnector({
   urls: { 250: RPC_URLS[250], 43114: RPC_URLS[43114] },
-  defaultChainId: 1,
+  defaultChainId: 43114,
   pollingInterval: POLLING_INTERVAL,
 });
 
